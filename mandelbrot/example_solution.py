@@ -9,15 +9,15 @@ from time import time
 
 np.set_printoptions(linewidth=300, suppress=True, precision=4)
 
-W = 5000 # no. of workers (TUNEABLE)
-L = 15000 # no. of loops (TUNEABLE)
+W = 5000  # no. of workers (TUNEABLE)
+L = 15000  # no. of loops (TUNEABLE)
 
 # no. of patches per axix
 Gb = 10  # (TUNEABLE)
 Gv = 1 << Gb
 Gm = Gv - 1
 
-Gv2 = Gv * Gv # toal no. of patches
+Gv2 = Gv * Gv  # toal no. of patches
 
 # no. of mantissa bits in float32
 Fb = 24
@@ -25,7 +25,7 @@ Fv = 1 << Fb
 Fm = Fv - 1
 Fd = 1.0 / Fv
 
-Er = 4.0 # escape radius^2
+Er = 4.0  # escape radius^2
 
 # patch size
 Ex = 3 / Gv
@@ -57,7 +57,9 @@ if True:
 
 else:
     # alternatively use uint64, but there is no atomic.add so
-    # would need to use atomic.cas 
+    # would need to use atomic.cas
+
+    ...
 
 
 @cu.jit(inline=True)
@@ -216,7 +218,7 @@ if __name__ == "__main__":
     val = D(cap + 1) / D(num + 2)
     std = D(cap + 1) * D(esc + 1) / (D(num + 2) * D(num + 2) * D(num + 3))
 
-    if False: # for debugging
+    if False:  # for debugging
         for name, value in dict(
             num=num,
             val=val,
@@ -246,7 +248,6 @@ if __name__ == "__main__":
     denom = num
 
     CONFIDENCE_LEVEL = 0.05
-    # CONFIDENCE_LEVEL /= 2  # two sided?
     # CONFIDENCE_LEVEL **= Gv2  # for the combination of tiles?
 
     val = np.sum(D(numer) / D(denom)) * area
